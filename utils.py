@@ -16,7 +16,7 @@ def load_data():
 def prepare_post(posts, comments):
 
     for i, post in enumerate(posts):
-        pk = post.get('pk') #  что за get?
+        pk = post["pk"] #  что за get?
         post_comments=[]
         for comment in comments:
             if comment.get("post_id") == pk:
@@ -33,6 +33,27 @@ def tagify_content(content):
         if word.startswith("#"):
             tag=word.replace("#", "")
             link = f"<a href=' /tag/{tag}'>{word}</a>"
-            word[i] = link
+            words[i] = link
     return " ".join(words)
+
+def get_post_by_pk(pk):
+    with open('data/data.json', 'r', encoding='UTF-8') as fp:
+        posts = json.load(fp)
+    for post in posts:
+        if post["pk"] == pk:
+            return post
+
+def get_comments_by_post_pk(post_pk):
+    with open('data/comments.json', 'r', encoding='UTF-8') as fp:
+        comments = json.load(fp)
+
+    post_comments =[]
+
+    for comment in comments:
+        if comment["post_id"] == post_pk:
+            post_comments.append(comment)
+    return  post_comments
+
+
+
 
