@@ -19,21 +19,31 @@ def page_single(pk):
     post_comments = get_comments_by_post_pk(pk)
     return render_template('post.html', post=post, comments=post_comments, cnt_com=len(post_comments))
 
-
-
-@app.route('/search/<s>')
-def search_post(s):
+@app.route('/search/')
+def search_post():
     s = request.args.get('s')
     with open('data/data.json', 'r', encoding='UTF-8') as fp:
         posts = json.load(fp)
-
     search_s = []
     if s:
         for post in posts:
             if s in post["poster_name"]:
                 search_s.append(post)
         return render_template("search.html", search_s=search_s, cnt=len(search_s))
-    return render_template("search.html")
+
+# @app.route('/search/<s>')
+# def search_post(s):
+#     s = request.args.get('s')
+#     with open('data/data.json', 'r', encoding='UTF-8') as fp:
+#         posts = json.load(fp)
+#
+#     search_s = []
+#     if s:
+#         for post in posts:
+#             if s in post["poster_name"]:
+#                 search_s.append(post)
+#         return render_template("search.html", search_s=search_s, cnt=len(search_s))
+#     return render_template("search.html")
 
 
 
