@@ -54,6 +54,11 @@ def get_comments_by_post_pk(post_pk):
             post_comments.append(comment)
     return  post_comments
 
+def seach_post(s):
+    with open('data/data.json', 'r', encoding='UTF-8') as fp:
+        posts = json.load(fp)
+
+
 
 
 
