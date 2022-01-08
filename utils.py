@@ -54,11 +54,29 @@ def get_comments_by_post_pk(post_pk):
             post_comments.append(comment)
     return  post_comments
 
-def seach_post(s):
+def search_posts_by_text(s):
     with open('data/data.json', 'r', encoding='UTF-8') as fp:
         posts = json.load(fp)
 
+    search_s = []
+    if s:
+        for post in posts:
+            if s.lower() in post["content"].lower():
+                search_s.append(post)
+    return search_s
 
+def get_posts_by_users(s):
+    with open('data/data.json', 'r', encoding='UTF-8') as fp:
+        posts = json.load(fp)
+
+    search_users = []
+    if s:
+        for post in posts:
+            if s.lower() == post["poster_name"].lower():
+                search_users.append(post)
+    return search_users
+
+# print(get_posts_by_users("leo"))
 
 
 

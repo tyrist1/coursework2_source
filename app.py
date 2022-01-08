@@ -2,7 +2,7 @@ import json
 
 from flask import Flask, render_template, request
 
-from utils import load_data, get_post_by_pk, get_comments_by_post_pk
+from utils import load_data, get_post_by_pk, get_comments_by_post_pk,search_posts_by_text, get_posts_by_users
 
 posts, bookmarks, comments = load_data()
 
@@ -22,29 +22,17 @@ def page_single(pk):
 @app.route('/search/')
 def search_post():
     s = request.args.get('s')
-    with open('data/data.json', 'r', encoding='UTF-8') as fp:
-        posts = json.load(fp)
-    search_s = []
-    if s:
-        for post in posts:
-            if s in post["poster_name"]:
-                search_s.append(post)
-        return render_template("search.html", search_s=search_s, cnt=len(search_s))
-
-# @app.route('/search/<s>')
-# def search_post(s):
-#     s = request.args.get('s')
-#     with open('data/data.json', 'r', encoding='UTF-8') as fp:
-#         posts = json.load(fp)
-#
-#     search_s = []
-#     if s:
-#         for post in posts:
-#             if s in post["poster_name"]:
-#                 search_s.append(post)
-#         return render_template("search.html", search_s=search_s, cnt=len(search_s))
-#     return render_template("search.html")
+    search_s = search_posts_by_text(s)
+    return render_template("search.html", posts=search_s, cnt=len(search_s))
+    # return render_template("search.html")
 
 
+@app.route("/users/<username>")
+def page_user(username):
 
-app.run()
+    posts = get_posts_by_users(username)
+    return render_template('user-feed.html', posts=posts )
+
+
+if __name__ == "__main__":
+    app.run()

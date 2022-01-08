@@ -25,35 +25,35 @@
   </header>
   <main class="container">
     <div class="search">
-      <form action="/" class="search__form">
-        <input type="search" class="search__input">
+      <form action="/search"  class="search__form">
+        <input type="search" type= "text" name ="s" class="search__input">
       </form>
-      <p class="search__results">Найдено постов: {{ cnt }}</p>
+      <p class="search__results">Найдено постов: {{cnt}}</p>
     </div>
     <section class="items">
       {% for post in posts %}
       <div class="items__item item">
         <div class="item__top">
-          <a href="/user-feed.html" class="item__head">
+          <a href="/posts/{{ post.pk }}" class="item__head">
             <div class="item__ava-wrap">
-              <img src="{{ search_s.poster_avatar }}" alt="" class="item__ava" width="47">
+              <img src="{{ post.poster_avatar }}" alt="" class="item__ava" width="47">
             </div>
-            <span class="item__username">{{ search_s.poster_name }}</span>
+            <span class="item__username">{{ post.poster_name }}</span>
           </a>
         </div>
         <a href="/post.html" class="item__post-link">
-          <img src="{{ search_s.pic }}" alt="" width="348" class="item__post-img">
+          <img src="{{ post.pic }}" alt="" width="348" class="item__post-img">
         </a>
-        <p class="item__descr"><a href="/tag.html" class="item__tag">#food</a> Текст описания коротки...</p>
+        <p class="item__descr">{{ post.content[:50] }}...</p>
         <div class="item__post-info">
-          <p class="item__comments-counter">{{ search_s.cnt_com }} комментариев</p>
+          <p class="item__comments-counter">{{ post.com_count }} комментария</p>
           <div class="item__counter">
             <img src="/static/img/eye.png" alt="" class="item__counter-icon" width="26">
-            <span class="item__counter-text">1023</span>
+            <span class="item__counter-text">{{ post.likes_count }}</span>
           </div>
         </div>
         <div class="item__post-bottom">
-          <a href="/post.html" class="item__btn-more">Подробнее</a>
+          <a href="/posts/{{ post.pk }}" class="item__btn-more">Подробнее...</a>
           <button type="button" class="item__bookmark-btn">
             <img src="/static/img/bookmark.png" alt="" class="item__bookmark-icon" width="24">
           </button>
